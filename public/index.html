@@ -1,0 +1,51 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
+  <div class="container">
+    <div id="items" class="items">
+
+    </div>
+  </div>
+
+  <script>
+    console.log('start');
+
+    async function generate() {
+      const response = await fetch('/get-list');
+      const json = await response.json()
+      
+      createItems(json);
+
+    }
+
+    generate();
+
+    function createItems(data) {
+
+      let htmlData = '';
+      const template = "<div class='item'><div class='image'></div><h3></h3></div>"
+      
+      data.forEach(element => {
+        htmlData += "<div id="+ element[0] +" class='item'><div class='image' style='background-image: url("+ element[2] +")'></div><h2>"+ element[0] + '. ' + element[1] +"</h2></div>"
+      });
+
+      const container = document.getElementById('items');
+      console.log(container);
+      container.innerHTML = htmlData;
+    }
+
+  </script>
+</body>
+</html>
